@@ -5,6 +5,9 @@ export function loadColor(){
         return axios.get('http://www.colr.org/json/scheme/random').then((response)=>{
             console.log("color data");
             dispatch(changeColor("#" + response.data.schemes[0].colors[0]))
+        }).catch((error) => {
+            console.log("error", error)
+            dispatch(changeColor("#000000"))
         })
     }
 }
@@ -21,6 +24,9 @@ export function loadHPHouse(){
         return axios.get('https://www.potterapi.com/v1/sortingHat').then((response)=>{
             console.log("hp api?", response.data);
             dispatch(changeHouse(response.data))
+        }).catch((error) => {
+            console.log("error", error)
+            dispatch(changeHouse(error))
         })
     }
 }
