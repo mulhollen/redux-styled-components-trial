@@ -1,12 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers/index';
+import BoxCon from './container/box-container';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import styled from 'styled-components';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const PageContainer = styled.div`
+    display: flex;
+    background-color: plum;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+`
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+let store = createStore(reducers, applyMiddleware(thunk))
+
+class App extends React.Component{
+    render(){
+        return(
+            <PageContainer>
+                <BoxCon />
+            </PageContainer>
+        )
+    }
+}
+
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+
